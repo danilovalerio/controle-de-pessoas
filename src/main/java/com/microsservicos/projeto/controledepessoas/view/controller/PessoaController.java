@@ -1,10 +1,12 @@
 package com.microsservicos.projeto.controledepessoas.view.controller;
 
 import com.microsservicos.projeto.controledepessoas.compartilhado.PessoaDto;
+import com.microsservicos.projeto.controledepessoas.http.AnimaisFeignClient;
 import com.microsservicos.projeto.controledepessoas.model.Pessoa;
 import com.microsservicos.projeto.controledepessoas.service.PessoaService;
 import com.microsservicos.projeto.controledepessoas.view.model.PessoaModeloRequest;
 import com.microsservicos.projeto.controledepessoas.view.model.PessoaModeloResponse;
+import com.microsservicos.projeto.controledepessoas.view.model.PessoaModeloResponseDetalhes;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,12 +65,12 @@ public class PessoaController {
     }
     
     @GetMapping(value="/{id}")
-    public ResponseEntity<PessoaModeloResponse> obterPorId(@PathVariable Integer id) {
+    public ResponseEntity<PessoaModeloResponseDetalhes> obterPorId(@PathVariable Integer id) {
         Optional<PessoaDto> pessoa = service.obterPorId(id);
 
         if(pessoa.isPresent()) {
             return new ResponseEntity<>(
-                new ModelMapper().map(pessoa.get(), PessoaModeloResponse.class), 
+                new ModelMapper().map(pessoa.get(), PessoaModeloResponseDetalhes.class),
                 HttpStatus.OK
             );
         }

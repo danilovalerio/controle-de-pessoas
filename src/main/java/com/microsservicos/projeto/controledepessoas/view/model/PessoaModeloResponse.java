@@ -1,9 +1,9 @@
 package com.microsservicos.projeto.controledepessoas.view.model;
 
 public class PessoaModeloResponse {
-    private String id;
-    private String nome;
-    private String sobrenome;
+    protected String id;
+    protected String nome;
+    protected String sobrenome;
 
     //#region Get / Set
     public String getId() {

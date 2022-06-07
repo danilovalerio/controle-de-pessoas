@@ -1,6 +1,8 @@
 package com.microsservicos.projeto.controledepessoas.service;
 
+import com.microsservicos.projeto.controledepessoas.compartilhado.AnimalDto;
 import com.microsservicos.projeto.controledepessoas.compartilhado.PessoaDto;
+import com.microsservicos.projeto.controledepessoas.http.AnimaisFeignClient;
 import com.microsservicos.projeto.controledepessoas.model.Pessoa;
 import com.microsservicos.projeto.controledepessoas.repository.PessoaRepository;
 import java.util.List;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 public class PessoaServiceImpl implements PessoaService {
     @Autowired
     private PessoaRepository repo;
+
+    @Autowired
+    private AnimaisFeignClient animaisMsClient;
 
     @Override
     public PessoaDto criarPessoa(PessoaDto pessoa) {
@@ -38,7 +43,12 @@ public class PessoaServiceImpl implements PessoaService {
 
             PessoaDto dto = new ModelMapper().map(pessoa.get(), PessoaDto.class);
 
-            return Optional.of(dto);
+           /**
+            * Aqui obter animais da pessoa lá na api de animais
+            */
+           List<AnimalDto> animais = animaisMsClient.obterAnimaisPorDono(id);
+           dto.setAnimais(animais);
+           return Optional.of(dto);
        }
 
        return Optional.empty();

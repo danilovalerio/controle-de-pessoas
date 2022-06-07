@@ -63,7 +63,7 @@ public class PessoaController {
     }
     
     @GetMapping(value="/{id}")
-    public ResponseEntity<PessoaModeloResponse> obterPorId(@PathVariable String id) {
+    public ResponseEntity<PessoaModeloResponse> obterPorId(@PathVariable Integer id) {
         Optional<PessoaDto> pessoa = service.obterPorId(id);
 
         if(pessoa.isPresent()) {
@@ -77,7 +77,7 @@ public class PessoaController {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<PessoaModeloResponse> atualizarPessoa(@PathVariable String id,
+    public ResponseEntity<PessoaModeloResponse> atualizarPessoa(@PathVariable Integer id,
         @Valid @RequestBody Pessoa pessoa) {
         ModelMapper mapper = new ModelMapper();
         PessoaDto dto = mapper.map(pessoa, PessoaDto.class);
@@ -87,7 +87,7 @@ public class PessoaController {
     }
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<Void> removerPessoa(@PathVariable String id) {
+    public ResponseEntity<Void> removerPessoa(@PathVariable Integer id) {
         service.removerPessoa(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } 
